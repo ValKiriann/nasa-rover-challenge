@@ -10,7 +10,7 @@
 // Primer parámetro: tamaño del cuadrado (5)
 // Segundo parámetro: coordenadas del rover en la actualidad
 // Tercer parámetro: las indicaciones de movimiento hasta el destino final 
-// Example: function setup(5, “1 2 N”, [“L”, “M”, “L”, “M”, “L”, “M”, “L”, “M”, “M”]) Expected Output: “1 3 N”
+// Example: function setup(5, "1 2 N", ["L", "M", "L", "M", "L", "M", "L", "M", "M"]) Expected Output: "1 3 N"
 
 
 // EL OUTPUT ES LA POSICION FINAL DEL ROVER
@@ -82,9 +82,31 @@ function setup(gridSize, startPoint, directions){
 		}
 
 		roverPosition = x + " " + y + " " + head;
+		return roverPosition;
 	}
 
-	applyPath();
-	return roverPosition;
+	// PRIMERO TESTAMOS QUE LOS DATOS SON VÁLIDOS
+	var errorMessage = [];
+
+	// comprueba que el tamaño de la cuadrícula es un número y positivo
+	if(typeof gridSize !== "number" || isNaN(Number(gridSize)) != false) {
+		errorMessage.push("gridSize is not a number, please try again");
+	} else if(gridSize < 0){
+		errorMessage.push("gridSize is not a positive number, please try again");
+	}
+
+	//comprobar que startpoint es un dato válido
+	
+
+	// SI NO HAY ERRORES EN LOS TEST DEVUELVE LA NUEVA POSICIÓN
+	if(errorMessage.length > 0) {
+
+		for (i=0;i< errorMessage.length;i++) {
+			console.error(errorMessage[i]);
+		}
+
+	} else { return applyPath() }
+
+	//setup(5, "1 2 N", ["L", "M", "L", "M", "L", "M", "L", "M", "M"])
 
 }
