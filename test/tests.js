@@ -1,3 +1,3 @@
-QUnit.test( "hello test", function( assert ) {
-  assert.ok( 1 == "1", "Passed!" );
+QUnit.test( "General requeriment", function( assert ) {
+  assert.ok( setup(5, '1 2 N', ['L', 'M', 'L', 'M', 'L', 'M', 'L', 'M', 'M']) === '1 3 N', "General requeriment - Passed!" );
 });
