@@ -72,6 +72,7 @@ function setup(gridSize, startPoint, directions){
 
 	// función para ejecutar las direcciones
 	function applyPath(){
+		count = 0;
 		while(count < directions.length){
 			if(directions[count] === "M"){
 				moveForward(head);
@@ -121,10 +122,23 @@ function setup(gridSize, startPoint, directions){
 		errorMessage.push("cardinal Point for Rover is not valid, please try again");
 	}
 
+	function checkDirections(){
+		var counter = 0;
+		var correctMoves = ["L", "R", "M"];
+		while(counter < directions.length){
+			var directionsAreCorrect = (correctMoves.indexOf(directions[counter]) > -1);
+			if(!directionsAreCorrect){
+				errorMessage.push("Directions for Rover are not valid, please try again");
+				break;
+			}else{counter++;}
+		}
+	}
+	checkDirections();
+
 	// SI NO HAY ERRORES EN LOS TEST DEVUELVE LA NUEVA POSICIÓN
 	if(errorMessage.length > 0) {
 
-		for (i=0;i< errorMessage.length;i++) {
+		for (i=0;i < errorMessage.length;i++) {
 			console.error(errorMessage[i]);
 		}
 
