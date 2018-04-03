@@ -89,14 +89,37 @@ function setup(gridSize, startPoint, directions){
 	var errorMessage = [];
 
 	// comprueba que el tamaño de la cuadrícula es un número y positivo
-	if(typeof gridSize !== "number" || isNaN(Number(gridSize)) != false) {
+	if(typeof gridSize != "number" && isNaN(Number(gridSize)) != false) {
 		errorMessage.push("gridSize is not a number, please try again");
 	} else if(gridSize < 0){
 		errorMessage.push("gridSize is not a positive number, please try again");
 	}
 
 	//comprobar que startpoint es un dato válido
-	
+	if(typeof x != "number" && isNaN(Number(x)) != false) {
+		errorMessage.push("X coordinate for Rover is not a number, please try again");
+		console.log(isNaN(Number(x)));
+	} else if(x < 0){
+		errorMessage.push("X coordinate for Rover is not a positive number, please try again");
+	} else if(x > gridSize) {
+		errorMessage.push("X coordinate for Rover can't be greater than gridSize, please try again");
+	}
+
+	if(typeof y != "number" && isNaN(Number(y)) != false) {
+		errorMessage.push("Y coordinate for Rover is not a number, please try again");
+		console.log(isNaN(Number(y)));
+	} else if(y < 0){
+		errorMessage.push("Y coordinate for Rover is not a positive number, please try again");
+	} else if(y > gridSize) {
+		errorMessage.push("Y coordinate for Rover can't be greater than gridSize, please try again");
+	}
+
+	var cardinalPoints = ["N", "S", "E", "W"];
+	var headIsCardinalPoint = (cardinalPoints.indexOf(head) > -1);
+
+	if(!headIsCardinalPoint){
+		errorMessage.push("cardinal Point for Rover is not valid, please try again");
+	}
 
 	// SI NO HAY ERRORES EN LOS TEST DEVUELVE LA NUEVA POSICIÓN
 	if(errorMessage.length > 0) {
