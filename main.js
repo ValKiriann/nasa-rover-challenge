@@ -82,8 +82,13 @@ function setup(gridSize, startPoint, directions){
 			count++;
 		}
 
-		roverPosition = x + " " + y + " " + head;
-		return roverPosition;
+		if(x > gridSize || y > gridSize) {
+			console.error("the directions cause Rover to get out of the grid, please try again");
+		} else {
+			roverPosition = x + " " + y + " " + head;
+			return roverPosition;
+		}
+		
 	}
 
 	// PRIMERO TESTAMOS QUE LOS DATOS SON VÁLIDOS
