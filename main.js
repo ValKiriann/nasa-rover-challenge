@@ -36,11 +36,42 @@ function checkdataNumber(number, data, errorMessage) {
 	} else if(gridSize < 0){
 		errorMessage.push(data + " is not a positive number, please try again");
 	}
-	// QUIERO METER AQUI IS IN GRID PERO NO QUIERO AUMENTAR A 4 LOS PARAMETROS ASI QUE ME AGOBIO
+	// QUIERO METER AQUI IS IN GRID PERO NO QUIERO AUMENTAR A 4 LOS PARAMETROS ASI QUE NO ESTA AQUI DENTRO
 	return errorMessage;
 }
 
+// Comprueba si los datos son correctos buscandolo en el array que contiene los datos correctos
+function dataIsCorrect(data,arrayData,errorMessage){
+	if(!arrayData.indexOf(data) > -1){
+		errorMessage.push("cardinal Point for Rover is not valid, please try again");
+	}
+}
+function directionsAreCorrect(directions,arrayData,errorMessage) {
+	directions.forEach(dataIsCorrect(element,arrayData,errorMessage););
+	return errorMessage;
+}
+/*
+function isCardinalPoint(head,errorMessage){
+	var cardinalPoints = ["N", "S", "E", "W"];
+	if(!cardinalPoints.indexOf(head) > -1){
+		errorMessage.push("cardinal Point for Rover is not valid, please try again");
+	}
+	return errorMessage;
+}
 
+function checkDirections(directions,errorMessage){
+	var count = 0;
+	var correctMoves = ["L", "R", "M"];
+	while(counter < directions.length){
+		var directionsAreCorrect = (correctMoves.indexOf(directions[counter]) > -1);
+		if(!directionsAreCorrect){
+			errorMessage.push("Directions for Rover are not valid, please try again");
+			break;
+		}else{counter++;}
+	}
+	return errorMessage;
+}
+*/
 
 // función para cambiar el punto de mira del rover
 function changeHeading(actualHead, direction) {
@@ -113,52 +144,23 @@ function setup(gridSize, startPoint, directions){
 	var y = roverPosition[1];
 	var head = roverPosition[2];
 	var errorMessage = [];
+	var cardinalPoints = ["N", "S", "E", "W"];
+	var validMoves = ["L", "R", "M"];
 
 	// Comprobar el tamaño de la cuadrícula
 	checkdataNumber(gridSize, "Grid Size");
 	//comprobar que startpoint es un dato válido
 	checkdataNumber(x, "X coordinate",errorMessage);
 	checkdataNumber(y, "Y coordinate",errorMessage);
+	isInGrid(x, gridSize, errorMessage);
+	isInGrid(y, gridSize, errorMessage);
+	// Comprobamos que la cabeza está en un punto cardinal
+	dataIsCorrect(head,cardinalPoints,errorMessage);
+	// Comprobamos que las direcciones son movimientos correctos
+	directionsAreCorrect(directions,validMoves,errorMessage);
 
+// VOY POR AQUI CHATOS
 
-
-	if(typeof x != "number" && isNaN(Number(x)) != false) {
-		errorMessage.push("X coordinate for Rover is not a number, please try again");
-		console.log(isNaN(Number(x)));
-	} else if(x < 0){
-		errorMessage.push("X coordinate for Rover is not a positive number, please try again");
-	} else if(x > gridSize) {
-		errorMessage.push("X coordinate for Rover can't be greater than gridSize, please try again");
-	}
-
-	if(typeof y != "number" && isNaN(Number(y)) != false) {
-		errorMessage.push("Y coordinate for Rover is not a number, please try again");
-		console.log(isNaN(Number(y)));
-	} else if(y < 0){
-		errorMessage.push("Y coordinate for Rover is not a positive number, please try again");
-	} else if(y > gridSize) {
-		errorMessage.push("Y coordinate for Rover can't be greater than gridSize, please try again");
-	}
-
-	var cardinalPoints = ["N", "S", "E", "W"];
-	var headIsCardinalPoint = (cardinalPoints.indexOf(head) > -1);
-
-	if(!headIsCardinalPoint){
-		errorMessage.push("cardinal Point for Rover is not valid, please try again");
-	}
-
-	function checkDirections(){
-		var counter = 0;
-		var correctMoves = ["L", "R", "M"];
-		while(counter < directions.length){
-			var directionsAreCorrect = (correctMoves.indexOf(directions[counter]) > -1);
-			if(!directionsAreCorrect){
-				errorMessage.push("Directions for Rover are not valid, please try again");
-				break;
-			}else{counter++;}
-		}
-	}
-	checkDirections();
 
 	// SI NO HAY ERRORES EN LOS TEST DEVUELVE LA NUEVA POSICIÓN
 	if(errorMessage.length > 0) {
